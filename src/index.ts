@@ -154,21 +154,19 @@ function useWhyRerender(
 
   const prevProps = useRef(props);
   const renderCount = useRef(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<number | null>(null);
   
   // cleanup function
   const cleanup = useCallback(() => {
-    if (timeoutRef.current !== undefined) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = undefined;
+    if (timeoutRef.current !== null) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
   }, []);
 
   // logging function
   const logChanges = useCallback((changes: Changes, deep: boolean) => {
     if (!enabled) return;
-
-    renderCount.current++;
 
     if (Object.keys(changes).length > 0) {
       console.group(`🔄 Render #${renderCount.current} ${caller ? `from ${caller}` : ''}`);
@@ -212,6 +210,8 @@ function useWhyRerender(
     if (!enabled) return;
 
     try {
+      renderCount.current++;
+
       const changes: Changes = {};
       Object.entries(props).forEach(([key, value]) => {
         const prev = prevProps.current[key];
@@ -224,7 +224,9 @@ function useWhyRerender(
       });
       
       if (debounceMs > 0) {
-        timeoutRef.current = setTimeout(() => {
+        cleanup();
+        
+        timeoutRef.current = window.setTimeout(() => {
           logChanges(changes, deep);
         }, debounceMs);
       } else {
@@ -235,11 +237,9 @@ function useWhyRerender(
     } catch (error) {
       console.error('useWhyRerender encountered an error:', error);
     }
-  }, [props, enabled, deep, debounceMs, logChanges]);
 
-  useEffect(() => {
     return cleanup;
-  }, [cleanup]);
+  }, [props, enabled, deep, debounceMs, logChanges, cleanup]);
 }
 
 export type { UseWhyRerenderOptions };

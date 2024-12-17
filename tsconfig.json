@@ -1,13 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
+    /* Language and Environment */
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react",
-    "declaration": true,
+
+    /* Modules */
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+
+    /* Emit */
     "outDir": "dist",
+
+    /* Type Checking */
     "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node"
+
+    /* Advanced */
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "dist"]
