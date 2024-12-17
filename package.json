@@ -1,6 +1,6 @@
 {
   "name": "use-why-rerender",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A React hook to track and debug prop changes in components",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

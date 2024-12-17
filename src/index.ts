@@ -189,7 +189,7 @@ function useWhyRerender(
       });
       console.groupEnd();
     } else {
-      console.log(`❓ Render #${renderCount.current} ${caller ? `from ${caller}` : ''}- No tracked props changed`);
+      console.log(`❓ Render #${renderCount.current} ${caller ? `from ${caller} ` : ''}- No tracked props changed`);
     }
   }, [enabled, caller]);
 
