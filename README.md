@@ -11,7 +11,7 @@ A lightweight drop-in React hook for finding out which props cause a component t
 ## Installation
 
 ```bash
-npm install use-why-rerender
+npm install -D use-why-rerender
 ```
 
 ## Usage
